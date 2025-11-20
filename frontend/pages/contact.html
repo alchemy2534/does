@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<style>
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/skill.jpg') no-repeat center center fixed;           
+    background-size: cover;
+    position: relative;
+}
+
+/* Dark overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.7);
+    z-index: 0;
+}
+
+/* Form container */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 500px;
+    padding: 40px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    color: #fff;
+    animation: fadeIn 1s ease forwards;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #00bfff;
+    letter-spacing: 1px;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px 14px 14px 14px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+textarea {
+    resize: none;
+    min-height: 120px;
+}
+
+label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.7);
+    pointer-events: none;
+    transition: 0.3s;
+    background: transparent;
+    padding: 0 4px;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label,
+textarea:focus + label,
+textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 12px;
+    color: #00bfff;
+    background: rgba(0,0,0,0.7);
+}
+
+/* Button */
+button {
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00bfff, #004466);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,191,255,0.4);
+}
+
+/* Success message */
+.success {
+    margin-top: 20px;
+    text-align: center;
+    color: #00ff7f;
+    font-weight: bold;
+    display: none;
+    animation: fadeIn 0.5s forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Contact Us</h1>
+    <form id="contactForm">
+        <div class="input-group">
+            <input type="text" id="name" placeholder=" " required>
+            <label for="name">Full Name</label>
+        </div>
+        <div class="input-group">
+            <input type="email" id="email" placeholder=" " required>
+            <label for="email">Email Address</label>
+        </div>
+        <div class="input-group">
+            <textarea id="message" placeholder=" " required></textarea>
+            <label for="message">Your Message</label>
+        </div>
+        <button type="submit">Send Message</button>
+    </form>
+    <div class="success" id="successMessage">Your message has been sent successfully!</div>
+</div>
+
+<script>
+const form = document.getElementById('contactForm');
+const successMessage = document.getElementById('successMessage');
+
+form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+    };
+
+    try {
+        const response = await fetch('http://localhost:5000/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if(response.ok){
+            successMessage.textContent = result.message;
+            successMessage.style.display = 'block';
+            form.reset();
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch(err) {
+        alert('Server not reachable');
+        console.error(err);
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* ---------- General setup ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../images/skill.jpg") no-repeat center center fixed; /* updated background */
+  background-size: cover;
+  position: relative;
+}
+
+/* Dark overlay */
+body::before {
+  content: '';
+  position: absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.7);
+  z-index: 0;
+}
+
+/* ---------- Registration Box with Glass Effect ---------- */
+.register-box {
+  width: 360px;
+  background: rgba(255, 255, 255, 0.1); /* keep form style */
+  border-radius: 15px;
+  padding: 35px 30px;
+  position: relative;
+  color: white;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  z-index: 1;
+}
+
+.register-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+}
+
+/* ---------- Close Button ---------- */
+.close-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.close-btn:hover {
+  color: #ff5555;
+}
+
+/* ---------- Input Fields ---------- */
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 8px 0;
+}
+
+.input-field input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 0.95rem;
+  padding-left: 5px;
+}
+
+.icon {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+/* ---------- Checkbox ---------- */
+.checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #cfcfcf;
+  margin-bottom: 20px;
+}
+.checkbox input {
+  margin-right: 6px;
+}
+
+/* ---------- Register Button ---------- */
+.register-btn {
+  width: 100%;
+  background: linear-gradient(to right, #111, #000000);
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.register-btn:hover {
+  background: linear-gradient(to right, #333, #555);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Footer Text ---------- */
+.login-text {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 15px;
+  color: #ccc;
+}
+.login-text a {
+  color: #4dd4ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.login-text a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .register-box {
+    width: 85%;
+    padding: 25px 20px;
+  }
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Apply animation to container */
+.container {
+    animation: fadeIn 1s ease forwards;
+}

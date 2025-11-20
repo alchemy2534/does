@@ -1,0 +1,88 @@
+{
+  "title": "Beckn Search Flow for Skill Verification",
+  "description": "BAP (your app) discovers BPPs via ONEST registry, sends signed search, receives on_search callback.",
+  "steps": [
+    {
+      "step": 1,
+      "from": "BAP (Your App)",
+      "to": "ONEST Registry[](https://sandbox.onest.network/onest/lookup)",
+      "method": "POST /onest/lookup",
+      "body": {
+        "country": "IND",
+        "type": "BPP"
+      },
+      "response": "List of BPPs (e.g., skill providers with subscriber_id and url)"
+    },
+    {
+      "step": 2,
+      "from": "BAP",
+      "to": "BPP (e.g., https://bpp-url.com/beckn)",
+      "method": "POST /search",
+      "headers": {
+        "Authorization": "Signature {ed25519_signature}",
+        "Content-Type": "application/json"
+      },
+      "body": {
+        "context": {
+          "domain": "onest:skills",
+          "country": "IND",
+          "city": "std:080",
+          "action": "search",
+          "core_version": "1.0.0",
+          "bap_id": "skill-verification-bap.local",
+          "bap_uri": "http://localhost:5000/api/beckn",
+          "transaction_id": "unique_tx_id",
+          "message_id": "unique_msg_id",
+          "timestamp": "2025-09-20T14:00:00Z"
+        },
+        "message": {
+          "intent": {
+            "item": {
+              "descriptor": {
+                "name": "Python programming"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "step": 3,
+      "from": "BPP",
+      "to": "BAP",
+      "method": "POST /on_search",
+      "body": {
+        "context": {
+          "action": "on_search",
+          "bap_uri": "http://localhost:5000/api/beckn"
+        },
+        "message": {
+          "catalog": {
+            "providers": [
+              {
+                "id": "skill-provider-1",
+                "descriptor": {
+                  "name": "ONEST Skill Platform"
+                },
+                "items": [
+                  {
+                    "id": "python-cert",
+                    "descriptor": {
+                      "name": "Python Certification",
+                      "nsqf_level": 5
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Use registry lookup first to get BPP URLs (e.g., for skill providers).",
+    "Sign payload with Ed25519 from src/utils/private_key.pem.",
+    "Handle 405: Ensure POST to BPP /search, not registry."
+  ]
+}

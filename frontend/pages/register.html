@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+  <link rel="stylesheet" href="../css/register.css">
+
+</head>
+<body>
+  <div class="container">
+    <div class="register-box">
+      <button class="close-btn" onclick="closeRegister()">✕</button>
+      <h2>Registration</h2>
+
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="name">Name</label>
+          <div class="input-field">
+            <input type="text" id="name" placeholder="Name" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email</label>
+          <div class="input-field">
+            <input type="email" id="email" placeholder="Email" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <div class="input-field">
+            <input type="password" id="password" placeholder="Password" required>
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <input type="checkbox" id="terms" required>
+          <label for="terms">I agree to the terms &amp; conditions</label>
+        </div>
+
+        <button type="submit" class="register-btn">Register</button>
+      </form>
+
+      <p class="login-text">Already have an account? 
+        <a href="./login.html">Login</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="../js/register.js"></script>
+  </body>
+</html>
